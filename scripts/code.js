@@ -1,26 +1,36 @@
 //Example usage
+let Player, Dealer, Settings
 
-//Create the Player
-let Player = BlackjackEngine.newPlayer();
-//Create the Dealer
-let Dealer = BlackjackEngine.newPlayer();
+function reset() {
+    Deck.reset();
+    //Create the Player
+    Player = BlackjackEngine.newPlayer();
+    //Create the Dealer
+    Dealer = BlackjackEngine.newPlayer();
 
-//Deal a card for the player
-BlackjackEngine.drawCard(Player)
-//Deal a card for the Dealer
-BlackjackEngine.drawCard(Dealer)
-//Deal a card for the player
-BlackjackEngine.drawCard(Player)
-//Deal a card for the Dealer that is hidden
-BlackjackEngine.drawCard(Dealer, false)
+    //Deal a card for the player
+    BlackjackEngine.drawCard(Player)
+    //Deal a card for the Dealer
+    BlackjackEngine.drawCard(Dealer)
+    //Deal a card for the player
+    BlackjackEngine.drawCard(Player)
+    //Deal a card for the Dealer that is hidden
+    BlackjackEngine.drawCard(Dealer, false)
+
+    Settings = {
+        gameOver: false,
+        turn: "player"
+    }
+
+    document.getElementById("reset-button").style.display = "none";
+    document.getElementById("result").innerHTML = "";
+    updateContent();
+}
+
+reset();
 
 const playerName = "player";
 const dealerName = "dealer";
-
-const Settings = {
-    gameOver: false,
-    turn: "player"
-}
 
 function setTurn(turn){
     Settings.turn = turn;
@@ -49,6 +59,12 @@ function stand(){
     }
 }
 
+function gameOver() {
+    Settings.gameOver = true;
+    document.getElementById("reset-button").style.display = "inline-block";
+    result();
+}
+
 function result(){
     let result = BlackjackEngine.getResults(Dealer.totalValue, Player.totalValue)[0];
     if(result == 0) {
@@ -65,14 +81,12 @@ function getScoreFor(target, element_id) {
     const hand = BlackjackEngine.calculateHandValue(target);
     
     if (hand.blackjack){
-        elem.innerHTML = "(Blackjack!)"
-        result();
-        gameOver = true;
+        elem.innerHTML = "(Blackjack!)";
+        gameOver();
+        setTurn(dealerName);
     }else if(hand.bust) {
         elem.innerHTML = "(Bust!)"
-        setTurn(dealerName);
-        Settings.gameOver = true;
-        result();
+        gameOver();
     }else if(hand.ace && !target.stand){
         elem.innerHTML = `(${hand.ace})`;
     }else{
@@ -87,16 +101,13 @@ function updateContent() {
     getScoreFor(Dealer, "dealer-score");
 }
 
-updateContent();
-
 let t = 0;
 setInterval(() => {
     if (Settings.turn == dealerName && !Settings.gameOver) {
         t += 0.25
         if (t >= 0.75) {
-            console.log(Dealer.totalValue)
             if (Dealer.totalValue >= 17) {
-                Settings.gameOver = true;
+                gameOver();
                 let result = BlackjackEngine.getResults(Dealer.totalValue, Player.totalValue)[0];
                 if(result == 0) {
                     document.getElementById("result").innerHTML = "Results: Player Wins!";
@@ -108,6 +119,7 @@ setInterval(() => {
                     document.getElementById("result").innerHTML = "Results: Push!";
                     // It's a push!
                 }
+                Dealer.stand = true;
             }else {
                 BlackjackEngine.drawCard(Dealer);
             }

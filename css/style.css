@@ -4,10 +4,14 @@ body {
 }
 
 .game {
+    position: absolute;
+    color: white;
     height: 100%;
     width: 100%;
     padding: 0;
     margin: 0;
+    background-color: #0a2c03;
+    text-align: center;
 }
 
 ul li {
@@ -115,11 +119,18 @@ h1 {
 
 }
 
-#h1inst {
-    color: green;
+#reset-button {
+    display: none;
 }
 
-.credit {
+#balance {
+    position: absolute;
+    float: left;
+    color: white;
+    padding: 0;
+}
+
+.credits {
     font-family: Helvetica;
     margin: 30px;
     text-align: center
@@ -127,6 +138,10 @@ h1 {
 
 }
 
+#h1inst {
+        color: green;
+    }
+    
 #hlcredits {
     color: green;
 }

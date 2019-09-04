@@ -89,7 +89,7 @@ BlackjackEngine.newPlayer = () => {
 BlackjackEngine.drawCard = (target, show = true) => {
     let card = Deck.getCard(show)
     target.cards[target.cards.length] = card
-    target.totalValue += card.value;
+    target.totalValue = BlackjackEngine.calculateHandValue(target).value;
     return card.value
 }
 
