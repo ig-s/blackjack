@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 
+        Blackjack
+            Regler:
+                Dealer - Får 2 kort, ett av korten är upp och ner  
+                Spelare - Får 2 kort, kan se båda korten
+                Spelaren kör först
+                Dealer stannar automatiskt vid 17 eller högre
+                
+                Får någon av spelarna över 21 så är det "Bust"
+                Får spelaren över 21, så vinner dealern automatiskt utan att behöva köra
+
+                Får ett av spelarna A och någon kort med värdet 10 så är det automatisk BlackJack
+                Om både dealer och spelaren får Blackjack så är det Push (alltså, pengarna tillbaka)
+                
+                Får ett av spelarna A och någon kort med värdet 10 så är det automatisk BlackJack
+                Om både dealer och spelaren får Blackjack så är det Push (alltså, pengarna tillbaka)
+                
+                2-10 har värdet 2-10
+                J, Q och K har värdet 10
+                A har värdet 1 om poängen + 11 inte är större än 21 annars har den värdet 11
+                
+                Vinnaren är det som för högst kort som inte är över 21.
+                
+                
+                Vinst för spelare:
+                Normal vinst:
+                        payout: 2:1
+                        BlackJack vinst:
+                        payout: 3:2
+                    Push:
+                    payout 1:1
+
+                    ---------------------
+                Mekaniker
+                Balance (Pengar)
+                    Bet (pengar som man satsar vid varje runda)
+
+                    Meny:
+                    - Starta spel
+                        - Instruktioner
+                        - Credits 
+     -->
+
+
+     <div class="game">
+        <ul id="dealer-cards">
+            <li>🃑</li>
+            <li>🃁</li>
+        </ul>
+        <ul id="player-cards"></ul>
+    </div>
+</body>
+</html>
