@@ -1,13 +1,25 @@
 //Example usage
 let Player, Dealer, Settings
 
+const playerName = "player";
+const dealerName = "dealer";
+
+/*
+    Player attributes:
+    balance [number]
+    bet [number]
+    cards [array]
+    stand [boolean]
+    totalValue [number]
+*/
+
 function reset() {
     Deck.reset();
     //Create the Player
     Player = BlackjackEngine.newPlayer();
     //Create the Dealer
     Dealer = BlackjackEngine.newPlayer();
-
+    
     //Deal a card for the player
     BlackjackEngine.drawCard(Player)
     //Deal a card for the Dealer
@@ -29,8 +41,6 @@ function reset() {
 
 reset();
 
-const playerName = "player";
-const dealerName = "dealer";
 
 function setTurn(turn){
     Settings.turn = turn;
@@ -42,9 +52,9 @@ function setTurn(turn){
 function hit(){
     if (Settings.turn == playerName) {
         BlackjackEngine.drawCard(Player)
-        let _, value = BlackjackEngine.calculateHandValue(Player);
+        let value = BlackjackEngine.calculateHandValue(Player).value;
 
-        if (value == 21){ 
+        if (value == 21){
             setTurn(dealerName);
         }
         updateContent();
@@ -62,6 +72,7 @@ function stand(){
 function gameOver() {
     Settings.gameOver = true;
     document.getElementById("reset-button").style.display = "inline-block";
+    Dealer.cards[1].show = true;
     result();
 }
 
@@ -101,6 +112,8 @@ function updateContent() {
     getScoreFor(Dealer, "dealer-score");
 }
 
+
+//Loop for the dealer
 let t = 0;
 setInterval(() => {
     if (Settings.turn == dealerName && !Settings.gameOver) {
