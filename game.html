@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Ultimate Blackjack - Play</title>
+    <script src="scripts/engine.js"></script>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <!-- 
@@ -29,8 +31,7 @@
                 A har värdet 1 om poängen + 11 inte är större än 21 annars har den värdet 11
                 
                 Vinnaren är det som för högst kort som inte är över 21.
-                
-                
+                 
                 Vinst för spelare:
                 Normal vinst:
                         payout: 2:1
@@ -52,10 +53,7 @@
 
 
      <div class="game">
-        <ul id="dealer-cards">
-            <li>🃑</li>
-            <li>🃁</li>
-        </ul>
+        <ul id="dealer-cards"></ul>
         <ul id="player-cards"></ul>
     </div>
 </body>

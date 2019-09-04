@@ -2,11 +2,17 @@ body {
     margin: 0;
     padding: 0;
 }
+
 .game {
     height: 100%;
     width: 100%;
     padding: 0;
     margin: 0;
+}
+
+ul li {
+    list-style: none;
+    display: inline-block;
 }
 
 .diamonds,
@@ -24,7 +30,6 @@ body {
     margin: 0;
     padding: 0;
     list-style: none;
-    font-size: 1600%;
 }
 
 .meny {
