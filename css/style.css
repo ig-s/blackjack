@@ -26,7 +26,7 @@ ul li {
     font-size: 800%;
 }
 
-#dealer-cards {
+#dealer-cards, #player-cards {
     margin: 0;
     padding: 0;
     list-style: none;
@@ -116,5 +116,17 @@ h1 {
 }
 
 #h1inst {
+    color: green;
+}
+
+.credit {
+    font-family: Helvetica;
+    margin: 30px;
+    text-align: center
+    
+
+}
+
+#hlcredits {
     color: green;
 }

@@ -58,8 +58,8 @@ Deck.getCard = (show = true) => {
         if (Deck.usedCards[usedDeckIdentifier] == undefined)
             stop = true
     }while(!stop)
-    Deck.usedCards.amt++;
 
+    Deck.usedCards.amt++;
     Deck.usedCards[usedDeckIdentifier] = {
         suit: suit,
         value: Deck.getCardValue(value),
@@ -89,6 +89,7 @@ BlackjackEngine.newPlayer = () => {
 BlackjackEngine.drawCard = (target, show = true) => {
     let card = Deck.getCard(show)
     target.cards[target.cards.length] = card
+    target.totalValue += card.value;
     return card.value
 }
 
@@ -97,10 +98,10 @@ BlackjackEngine.drawCard = (target, show = true) => {
 //0 - Player wins
 //1 - Dealer wins
 //2 - Push
-BlackjackEngine.getWinners = (dealer, opponent) => {
+BlackjackEngine.getResults = (dealer, opponent) => {
     if (typeof opponent == "object") {
         if (opponent.length == 1){
-            BlackjackEngine.getWinners(dealer, opponent[0]);
+            BlackjackEngine.getResults(dealer, opponent[0]);
         }else{
             let results = [];
             for(let i = 0; i < opponent; i++){
@@ -114,43 +115,13 @@ BlackjackEngine.getWinners = (dealer, opponent) => {
             return results
         }
     }else{
-        if (score > 21)  return [1];
+        if (opponent > 21)  return [1];
         else if (dealer > 21) return [0];
-        else if (dealer == score) return [2];
-        else if (score > dealer) return [0];
-        else if (score < dealer) return [1]
+        else if (dealer == opponent) return [2];
+        else if (opponent > dealer) return [0];
+        else if (opponent < dealer) return [1]
     }
 }
-
-BlackjackEngine.calculateHandValue = (target) => {
-    let _value = 0;
-    let _aces = 0;
-
-    for (k of target.cards) {
-        if (k.show) {
-            _value += k.value
-            if (k.value == "ace") _aces++
-        }
-    }
-
-    let ace_str = ""
-
-    while(_aces > 0){
-        if (_value > 21) {
-            _value -= 10;
-            _aces--;
-        }else{
-            ace_str = `${_value-10}/${value}`;
-            break;
-        }
-    }
-
-    if (_value == 21 && target.cards.length == 2) return "BlackJack", _value
-    if (_value <= 21) {
-        return _value, _value, ace_str
-    }
-}
-
 
 //Return Results:
 //0 - Player wins
@@ -181,6 +152,7 @@ BlackjackEngine.getWinners = (dealer, opponent) => {
     }
 }
 
+//Calculate the hand value for a player, including aces
 BlackjackEngine.calculateHandValue = (target) => {
     let _value = 0;
     let _aces = 0;
@@ -188,7 +160,7 @@ BlackjackEngine.calculateHandValue = (target) => {
     for (k of target.cards) {
         if (k.show) {
             _value += k.value
-            if (k.value == "ace") _aces++
+            if (k.faceValue == "ace") _aces++
         }
     }
 
@@ -199,7 +171,7 @@ BlackjackEngine.calculateHandValue = (target) => {
             _value -= 10;
             _aces--;
         }else{
-            ace_str = `${_value-10}/${value}`;
+            ace_str = `${_value-10}/${_value}`;
             break;
         }
     }
@@ -227,11 +199,19 @@ BlackjackEngine.calculateHandValue = (target) => {
     return ret
 }
 
+//Get the content of the cards in list form to use in HTML
 BlackjackEngine.content = (target) => {
     let stringBuilder = "";
     for (card of target.cards) {
         if (card.show) {
-            stringBuilder += `<li class="card">${card.identifier}</li>`;
+            let includedClass = "card "
+
+            if (card.suit == "diamond") {
+                includedClass += "diamonds "
+            }else if(card.suit == "heart"){
+                includedClass += "hearts "
+            }
+            stringBuilder += `<li class="${includedClass}">${card.identifier}</li>`;
         }else{
             stringBuilder += `<li class="card">${Deck.getHiddenCardImage()}</li>`;
         }
